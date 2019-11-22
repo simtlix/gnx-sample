@@ -1,0 +1,1 @@
+exports.Book = require('./book')
