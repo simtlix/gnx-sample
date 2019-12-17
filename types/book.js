@@ -2,12 +2,11 @@ const graphql = require('graphql')
 const ISBNType = require('./isbn')
 const AssignedCategoryType = require('./assignedCategory')
 const Author = require('../models/author')
-const Book = require('../models/book')
 const gnx = require('@simtlix/gnx')
 
 const {
   GraphQLObjectType, GraphQLString,
-  GraphQLID, GraphQLInt, GraphQLList
+  GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull
 } = graphql
 
 const BookType = new GraphQLObjectType({
@@ -16,7 +15,7 @@ const BookType = new GraphQLObjectType({
   everything is initialized. For example below code will throw error AuthorType not
   found if not wrapped in a function */
   fields: () => ({
-    id: { type: GraphQLID },
+    id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: GraphQLString },
     pages: { type: GraphQLInt },
     ISBN: {
@@ -53,8 +52,7 @@ const BookType = new GraphQLObjectType({
   })
 })
 
-gnx.connect(Book, BookType, 'book', 'books')
-
 module.exports = BookType
 
 const AuthorType = require('./author')
+gnx.connect(null, BookType, 'book', 'books')

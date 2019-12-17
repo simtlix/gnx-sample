@@ -1,5 +1,4 @@
 const graphql = require('graphql')
-const Book = require('../models/book')
 const Author = require('../models/author')
 const City = require('../models/city')
 const gnx = require('@simtlix/gnx')
@@ -35,7 +34,7 @@ const AuthorType = new GraphQLObjectType({
         }
       },
       resolve (parent, args) {
-        return Book.find({ authorID: parent.id })
+        return gnx.getModel(BookType).find({ authorID: parent.id })
       }
     }
   })
