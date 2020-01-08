@@ -77,6 +77,13 @@ const stateMachine = {
       action: async (params) => {
         console.log(JSON.stringify(params))
       }
+    },
+    activate: {
+      from: BookState._nameLookup.INACTIVE,
+      to: BookState._nameLookup.ACTIVE,
+      action: async (params) => {
+        console.log(JSON.stringify(params))
+      }
     }
   }
 }
