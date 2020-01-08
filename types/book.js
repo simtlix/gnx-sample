@@ -6,8 +6,20 @@ const gnx = require('@simtlix/gnx')
 
 const {
   GraphQLObjectType, GraphQLString,
-  GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull
+  GraphQLID, GraphQLInt, GraphQLList, GraphQLEnumType
 } = graphql
+
+const BookState = new GraphQLEnumType({
+  name: 'BookState',
+  values: {
+    ACTIVE: {
+      value: 0
+    },
+    INACTIVE: {
+      value: 1
+    }
+  }
+})
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
@@ -15,7 +27,10 @@ const BookType = new GraphQLObjectType({
   everything is initialized. For example below code will throw error AuthorType not
   found if not wrapped in a function */
   fields: () => ({
-    id: { type: new GraphQLNonNull(GraphQLID) },
+    id: {
+      type: GraphQLID
+    },
+    state: { type: BookState },
     name: { type: GraphQLString },
     pages: { type: GraphQLInt },
     ISBN: {
@@ -53,6 +68,18 @@ const BookType = new GraphQLObjectType({
 })
 
 module.exports = BookType
+const stateMachine = {
+  initialState: BookState._nameLookup.INACTIVE,
+  actions: {
+    inactivate: {
+      from: BookState._nameLookup.ACTIVE,
+      to: BookState._nameLookup.INACTIVE,
+      action: async (params) => {
+        console.log(JSON.stringify(params))
+      }
+    }
+  }
+}
 
 const AuthorType = require('./author')
-gnx.connect(null, BookType, 'book', 'books')
+gnx.connect(null, BookType, 'book', 'books', null, null, stateMachine)
