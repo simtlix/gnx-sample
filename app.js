@@ -20,7 +20,11 @@ app.use('/graphql', graphqlHTTP({
   schema,
   /* Directing express-graphql to use graphiql when goto '/graphql' address in the browser
   which provides an interface to make GraphQl queries */
-  graphiql: true
+  graphiql: true,
+  formatError: gnx.buildErrorFormatter((err) => {
+    console.log(err)
+  })
+
 }))
 
 app.listen(3000, () => {
