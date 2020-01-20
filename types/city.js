@@ -29,7 +29,7 @@ const CityType = new GraphQLObjectType({
   })
 })
 
-gnx.connect(City, CityType, 'author', 'authors')
+gnx.connect(City, CityType, 'city', 'cities')
 
 module.exports = CityType
 

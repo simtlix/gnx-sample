@@ -31,6 +31,30 @@ const BookType = new GraphQLObjectType({
       type: GraphQLID
     },
     state: { type: BookState },
+    rootBook: {
+      type: BookType,
+      extensions: {
+        relation: {
+          connectionField: 'rootBook',
+          embedded: false
+        }
+      },
+      resolve (parent) {
+        return gnx.getModel(BookType).find({ _id: parent.rootBook })
+      }
+    },
+    childBooks: {
+      type: new GraphQLList(BookType),
+      extensions: {
+        relation: {
+          embedded: false,
+          connectionField: 'rootBook'
+        }
+      },
+      resolve (parent) {
+        return gnx.getModel(BookType).find({ rootBook: parent._id })
+      }
+    },
     name: { type: GraphQLString },
     pages: { type: GraphQLInt },
     ISBN: {
