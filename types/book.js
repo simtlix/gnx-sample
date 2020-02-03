@@ -21,8 +21,19 @@ const BookState = new GraphQLEnumType({
   }
 })
 
+const ChildBookValidation = {
+  validate: async function (type, param, materialized) {
+    if (materialized.rootBook) {
+      //throw new Error('ERROOOOOOOOOOR')
+    }
+  }
+}
+
 const BookType = new GraphQLObjectType({
   name: 'Book',
+  extensions: {
+    validations: [ChildBookValidation]
+  },
   /* We are wrapping fields in the function as we don't want to execute this until
   everything is initialized. For example below code will throw error AuthorType not
   found if not wrapped in a function */
@@ -98,6 +109,7 @@ const stateMachine = {
     inactivate: {
       from: BookState._nameLookup.ACTIVE,
       to: BookState._nameLookup.INACTIVE,
+      description: 'Inactivate book sent by parameter',
       action: async (params) => {
         console.log(JSON.stringify(params))
       }

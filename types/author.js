@@ -13,7 +13,10 @@ const AuthorType = new GraphQLObjectType({
   embedded: true,
   fields: () => ({
     id: { type: GraphQLID },
-    name: { type: GraphQLString },
+    name: {
+      type: GraphQLString,
+      description: 'Name of the author'
+    },
     age: { type: GraphQLInt },
     city: {
       type: CityType,
