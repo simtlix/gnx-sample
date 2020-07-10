@@ -15,8 +15,8 @@ const includedTypes = [type.Book]
 
 /* This route will be used as an endpoint to interact with Graphql,
 All queries will go through this route. */
-const schema = gnx.createSchema(includedTypes, includedTypes)
-const schema2 = gnx.createSchema()
+const schema2 = gnx.createSchema(includedTypes, includedTypes)
+const schema = gnx.createSchema()
 
 app.use('/graphql', graphqlHTTP({
   // Directing express-graphql to use this schema to map out the graph
@@ -37,6 +37,7 @@ app.use('/graphql2', graphqlHTTP({
   graphiql: true,
   formatError: gnx.buildErrorFormatter((err) => {
     console.log(err)
+    return err
   })
 
 }))
