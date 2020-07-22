@@ -10,11 +10,14 @@ mongoose.connection.once('open', () => {
   console.log('connected to database')
 })
 
-require('./types')
+const type = require('./types')
+const includedTypes = [type.Book]
 
 /* This route will be used as an endpoint to interact with Graphql,
 All queries will go through this route. */
+const schema2 = gnx.createSchema(includedTypes, includedTypes)
 const schema = gnx.createSchema()
+
 app.use('/graphql', graphqlHTTP({
   // Directing express-graphql to use this schema to map out the graph
   schema,
@@ -26,6 +29,19 @@ app.use('/graphql', graphqlHTTP({
   })
 
 }))
+app.use('/graphql2', graphqlHTTP({
+  // Directing express-graphql to use this schema to map out the graph
+  schema: schema2,
+  /* Directing express-graphql to use graphiql when goto '/graphql' address in the browser
+  which provides an interface to make GraphQl queries */
+  graphiql: true,
+  formatError: gnx.buildErrorFormatter((err) => {
+    console.log(err)
+    return err
+  })
+
+}))
+
 
 app.listen(3000, () => {
   console.log('Listening on port 3000')

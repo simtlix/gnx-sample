@@ -7,7 +7,11 @@ const bookSchema = new Schema({
   authorID: mongoose.Schema.Types.ObjectId,
   ISBN: {
     country: String,
-    number: String
+    number: String,
+    code: {
+      number: String,
+      codeType: String
+    }
   },
   categories: [{
     name: String,
