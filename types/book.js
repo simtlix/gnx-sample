@@ -13,10 +13,10 @@ const BookState = new GraphQLEnumType({
   name: 'BookState',
   values: {
     ACTIVE: {
-      value: 0
+      value: 'ACTIVE'
     },
     INACTIVE: {
-      value: 1
+      value: 'INACTIVE'
     }
   }
 })

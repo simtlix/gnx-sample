@@ -4,7 +4,7 @@ const gnx = require('@simtlix/gnx')
 const app = express()
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017,localhost:27018,localhost:27019/example', { replicaSet: 'rs' })
+mongoose.connect('mongodb://localhost:27017,localhost:27018,localhost:27019/example', { replicaSet: 'rs', useNewUrlParser: true, useUnifiedTopology: true })
 
 mongoose.connection.once('open', () => {
   console.log('connected to database')
