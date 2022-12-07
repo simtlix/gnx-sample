@@ -10,7 +10,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "@simtlix/gnx": "^2.4.7",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-graphql": "^0.7.1",
     "graphql": "^14.5.8",
     "mongoose": "^5.7.12"
